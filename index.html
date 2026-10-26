@@ -1,0 +1,691 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Creator Hub</title>
+
+<style>
+:root {
+  --bg: #090711;
+  --panel: #151020;
+  --purple: #8b5cf6;
+  --pink: #d946ef;
+  --text: #f5f3ff;
+  --muted: #b5adc8;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+
+header {
+  background: #100b1b;
+  border-bottom: 1px solid #302044;
+  padding: 16px 6%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.logo {
+  font-size: 23px;
+  font-weight: bold;
+}
+
+.logo span {
+  color: var(--pink);
+}
+
+nav {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+nav a {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+nav a:hover {
+  color: var(--pink);
+}
+
+.hero {
+  text-align: center;
+  padding: 75px 20px 55px;
+  background: radial-gradient(ellipse at top, #39205c 0%, #120b20 48%, #090711 80%);
+}
+
+.tag {
+  display: inline-block;
+  border: 1px solid #7044a6;
+  border-radius: 30px;
+  padding: 6px 14px;
+  color: #e7c9ff;
+  font-size: 13px;
+  margin-bottom: 18px;
+}
+
+.hero h1 {
+  font-size: clamp(32px, 7vw, 58px);
+  line-height: 1.15;
+  margin-bottom: 18px;
+}
+
+.gradient {
+  background: linear-gradient(90deg, #c084fc, #f0abfc);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero p {
+  color: var(--muted);
+  max-width: 600px;
+  margin: 0 auto 25px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 12px 20px;
+  border: 0;
+  border-radius: 10px;
+  background: linear-gradient(90deg, var(--purple), var(--pink));
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btn:hover {
+  opacity: .85;
+}
+
+section {
+  padding: 48px 6%;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.section-heading {
+  margin-bottom: 22px;
+}
+
+.section-heading h2 {
+  font-size: 27px;
+  margin-bottom: 5px;
+}
+
+.section-heading p {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.search {
+  width: 100%;
+  background: var(--panel);
+  border: 1px solid #382748;
+  color: white;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  outline: none;
+}
+
+.search:focus {
+  border-color: var(--purple);
+}
+
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-bottom: 25px;
+}
+
+.category {
+  border: 1px solid #443451;
+  background: var(--panel);
+  color: white;
+  border-radius: 25px;
+  padding: 9px 15px;
+  cursor: pointer;
+}
+
+.category.active,
+.category:hover {
+  background: var(--purple);
+  border-color: var(--purple);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
+  gap: 18px;
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid #30213f;
+  border-radius: 15px;
+  padding: 21px;
+  transition: transform .2s, border-color .2s;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  border-color: var(--purple);
+}
+
+.card-icon {
+  font-size: 28px;
+  margin-bottom: 9px;
+}
+
+.card h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.card p {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 16px;
+  white-space: pre-line;
+}
+
+.card .btn {
+  width: 100%;
+}
+
+.small-label {
+  display: inline-block;
+  color: #d8b4fe;
+  background: #29183c;
+  border-radius: 5px;
+  font-size: 11px;
+  padding: 3px 8px;
+  margin-bottom: 10px;
+}
+
+.empty {
+  color: var(--muted);
+  padding: 20px 0;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.step-number {
+  color: #d8b4fe;
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 7px;
+}
+
+.tools a {
+  display: block;
+  color: #e9d5ff;
+  text-decoration: none;
+  padding: 13px 0;
+  border-bottom: 1px solid #30213f;
+}
+
+.tools a:hover {
+  color: var(--pink);
+}
+
+.cta {
+  text-align: center;
+  background: linear-gradient(130deg, #281342, #171024);
+  border: 1px solid #53316f;
+  border-radius: 18px;
+  padding: 35px 20px;
+}
+
+.cta p {
+  color: var(--muted);
+  margin: 10px auto 20px;
+}
+
+footer {
+  text-align: center;
+  border-top: 1px solid #30213f;
+  padding: 25px 15px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #2d1743;
+  border: 1px solid var(--purple);
+  padding: 12px 18px;
+  border-radius: 10px;
+  display: none;
+  z-index: 10;
+}
+
+@media (max-width: 600px) {
+  header {
+    padding: 15px 5%;
+  }
+
+  nav {
+    gap: 12px;
+  }
+
+  nav a {
+    font-size: 13px;
+  }
+
+  .hero {
+    padding-top: 55px;
+  }
+
+  section {
+    padding: 35px 5%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">AI Creator <span>Hub ✨</span></div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#prompts">Prompts</a>
+    <a href="#ideas">Ideas</a>
+    <a href="#tutorials">Tutorials</a>
+    <a href="#tools">Tools</a>
+  </nav>
+</header>
+
+<main>
+
+  <div class="hero" id="home">
+    <div class="tag">✨ YOUR CREATIVE AI WORKSPACE</div>
+    <h1>Turn Your Ideas Into<br>
+      <span class="gradient">Amazing Content</span>
+    </h1>
+    <p>
+      Discover AI prompts, video ideas, creative tools and simple
+      tutorials to help you create content for YouTube, TikTok and more.
+    </p>
+    <a href="#prompts" class="btn">Explore Prompts →</a>
+  </div>
+
+  <section id="prompts">
+    <div class="section-heading">
+      <h2>🚀 AI Prompt Library</h2>
+      <p>Find a prompt, copy it, and use it with your favorite AI tool.</p>
+    </div>
+
+    <input
+      id="searchInput"
+      class="search"
+      type="search"
+      placeholder="🔍 Search prompts..."
+      aria-label="Search prompts"
+    >
+
+    <div class="categories">
+      <button class="category active" data-category="All">All</button>
+      <button class="category" data-category="Drama">🎭 Drama</button>
+      <button class="category" data-category="Funny">😂 Funny</button>
+      <button class="category" data-category="Education">📚 Education</button>
+      <button class="category" data-category="Gaming">🎮 Gaming</button>
+      <button class="category" data-category="Business">💡 Business</button>
+    </div>
+
+    <div class="grid" id="promptGrid"></div>
+    <p class="empty" id="emptyMessage" hidden>No prompts found. Try another search.</p>
+  </section>
+
+  <section id="ideas">
+    <div class="section-heading">
+      <h2>💡 Video Ideas</h2>
+      <p>Creative starting points for your next video.</p>
+    </div>
+
+    <div class="grid">
+      <article class="card">
+        <div class="card-icon">🍎</div>
+        <h3>Talking Fruit Drama</h3>
+        <p>Create a funny story about fruit characters with big personalities, unexpected twists and colorful 3D animation.</p>
+        <button class="btn" onclick="copyText('Create a funny 3D animated fruit drama with expressive fruit characters, colorful scenes, dramatic reactions and a surprising ending. Vertical 9:16 video.')">Copy Idea</button>
+      </article>
+
+      <article class="card">
+        <div class="card-icon">🐱</div>
+        <h3>Funny Cat Adventures</h3>
+        <p>Make an animated cat character experience a silly everyday adventure.</p>
+        <button class="btn" onclick="copyText('Create a funny animated cat adventure with expressive characters, colorful backgrounds, clear storytelling and a surprising comedic ending. Vertical 9:16 format.')">Copy Idea</button>
+      </article>
+
+      <article class="card">
+        <div class="card-icon">📖</div>
+        <h3>Quick Learning Videos</h3>
+        <p>Explain a school topic using simple words, examples and colorful visuals.</p>
+        <button class="btn" onclick="copyText('Create a short educational video explaining [TOPIC] in simple language, with three examples, colorful visuals, captions and a quick recap.')">Copy Idea</button>
+      </article>
+
+      <article class="card">
+        <div class="card-icon">🎮</div>
+        <h3>Gaming Shorts</h3>
+        <p>Turn a gaming highlight into an exciting short video with captions and sound effects.</p>
+        <button class="btn" onclick="copyText('Plan an exciting gaming short featuring my own gameplay, a strong opening, readable captions, suitable sound effects and a memorable ending.')">Copy Idea</button>
+      </article>
+
+      <article class="card">
+        <div class="card-icon">🌍</div>
+        <h3>Ethiopian Culture</h3>
+        <p>Share Ethiopian food, traditions, places and cultural stories respectfully.</p>
+        <button class="btn" onclick="copyText('Create a respectful short educational video about Ethiopian culture, featuring [TRADITION OR FOOD], accurate information, engaging narration and suitable visuals.')">Copy Idea</button>
+      </article>
+
+      <article class="card">
+        <div class="card-icon">🎬</div>
+        <h3>Mini Movie</h3>
+        <p>Tell a complete short story with a beginning, conflict and satisfying ending.</p>
+        <button class="btn" onclick="copyText('Write a 60-second original mini movie with a strong hook, two main characters, a clear conflict, emotional storytelling and an unexpected but satisfying ending.')">Copy Idea</button>
+      </article>
+    </div>
+  </section>
+
+  <section id="tutorials">
+    <div class="section-heading">
+      <h2>🎓 Beginner Tutorials</h2>
+      <p>A simple workflow to help you start creating.</p>
+    </div>
+
+    <div class="steps">
+      <article class="card">
+        <div class="step-number">01</div>
+        <h3>Write Your Idea</h3>
+        <p>Choose a topic and use the prompt library to plan your story or video.</p>
+      </article>
+
+      <article class="card">
+        <div class="step-number">02</div>
+        <h3>Create Your Visuals</h3>
+        <p>Use an image or video creation tool. Check its free limits and usage rights.</p>
+      </article>
+
+      <article class="card">
+        <div class="step-number">03</div>
+        <h3>Edit Your Video</h3>
+        <p>Arrange your clips, add narration, captions and suitable music.</p>
+      </article>
+
+      <article class="card">
+        <div class="step-number">04</div>
+        <h3>Publish Your Work</h3>
+        <p>Review your video, thumbnail, privacy settings and platform rules before publishing.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="tools">
+    <div class="section-heading">
+      <h2>🛠️ Creator Tools</h2>
+      <p>Explore these websites. Some features may require an account or payment.</p>
+    </div>
+
+    <div class="grid tools">
+      <article class="card">
+        <h3>🎨 Design & Editing</h3>
+        <a href="https://www.canva.com/" target="_blank" rel="noopener noreferrer">Canva →</a>
+        <a href="https://www.capcut.com/" target="_blank" rel="noopener noreferrer">CapCut →</a>
+        <a href="https://pixabay.com/" target="_blank" rel="noopener noreferrer">Pixabay media →</a>
+      </article>
+
+      <article class="card">
+        <h3>🤖 AI Assistance</h3>
+        <a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPT →</a>
+        <a href="https://www.adobe.com/products/firefly.html" target="_blank" rel="noopener noreferrer">Adobe Firefly →</a>
+      </article>
+
+      <article class="card">
+        <h3>📺 Learn & Publish</h3>
+        <a href="https://www.youtube.com/creators/" target="_blank" rel="noopener noreferrer">YouTube Creators →</a>
+        <a href="https://developer.mozilla.org/en-US/docs/Learn_web_development" target="_blank" rel="noopener noreferrer">Learn Web Development →</a>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <div class="cta">
+      <h2>Ready to Create Something Amazing?</h2>
+      <p>Pick a prompt, customize it and start your next creative project.</p>
+      <a href="#prompts" class="btn">Start Creating ✨</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>© <span id="year"></span> AI Creator Hub. Made for creative minds.</p>
+  <p>Independent project. Not affiliated with the listed tools.</p>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const prompts = [
+  {
+    title: "Dramatic Fruit Story",
+    category: "Drama",
+    icon: "🍎",
+    description: "Create a dramatic story featuring fruit characters.",
+    prompt: "Create an original dramatic 3D animated story featuring expressive fruit characters. Include a strong opening, a misunderstanding, emotional reactions, colorful cinematic lighting and an unexpected ending. Format: vertical 9:16."
+  },
+  {
+    title: "Talking Apple",
+    category: "Funny",
+    icon: "🍏",
+    description: "A confident apple gets into a funny argument.",
+    prompt: "Create a funny 3D animated scene about a confident talking apple arguing with a banana over something silly. Use expressive faces, funny timing, bright colors and a surprising punchline. Vertical 9:16."
+  },
+  {
+    title: "Funny Cat Adventure",
+    category: "Funny",
+    icon: "🐱",
+    description: "An animated cat has a day full of surprises.",
+    prompt: "Write a funny short animation about a curious cat whose simple plan turns into a series of silly surprises. Include three short scenes, expressive reactions and a heartwarming ending."
+  },
+  {
+    title: "Counting for Kids",
+    category: "Education",
+    icon: "🔢",
+    description: "Teach children numbers with a catchy song.",
+    prompt: "Create an original educational video plan teaching young children to count from 1 to 10. Include cheerful narration, colorful objects, simple repetition and one visual example for every number."
+  },
+  {
+    title: "Science Explained",
+    category: "Education",
+    icon: "🔬",
+    description: "Explain a science concept simply.",
+    prompt: "Explain [SCIENCE TOPIC] for middle-school students using simple language, three everyday examples, a short introduction, visual suggestions and a final recap. Keep the information scientifically accurate."
+  },
+  {
+    title: "History in One Minute",
+    category: "Education",
+    icon: "📚",
+    description: "Turn a history topic into a short lesson.",
+    prompt: "Create a one-minute educational video script about [HISTORICAL TOPIC]. Start with an interesting question, explain key facts in chronological order and end with a memorable summary. Avoid invented facts."
+  },
+  {
+    title: "Gaming Highlights",
+    category: "Gaming",
+    icon: "🎮",
+    description: "Make your gameplay more exciting.",
+    prompt: "Plan a fast-paced gaming highlight video using my own gameplay clips. Suggest a strong opening, readable captions, scene cuts, suitable sound effects and an exciting ending."
+  },
+  {
+    title: "Gaming Channel Intro",
+    category: "Gaming",
+    icon: "⚡",
+    description: "Create a memorable gaming channel intro.",
+    prompt: "Design a short gaming channel intro for the name [CHANNEL NAME]. Use bold typography, energetic transitions, original graphics and a clear logo reveal. Make it suitable for a vertical or horizontal video."
+  },
+  {
+    title: "Business Name Ideas",
+    category: "Business",
+    icon: "💡",
+    description: "Brainstorm names for a creative project.",
+    prompt: "Suggest 20 original, memorable names for a beginner-friendly creative website. Keep them short and easy to spell. For each name, explain its meaning and suggest a matching visual identity."
+  },
+  {
+    title: "Social Media Calendar",
+    category: "Business",
+    icon: "🗓️",
+    description: "Plan a week of original content.",
+    prompt: "Create a seven-day content calendar for a beginner video creator focused on [NICHE]. Include a topic, opening hook, video outline and call to action for each day."
+  },
+  {
+    title: "Ethiopian Culture",
+    category: "Education",
+    icon: "🇪🇹",
+    description: "Share a cultural story respectfully.",
+    prompt: "Create a short educational video about [ETHIOPIAN CULTURAL TOPIC]. Include accurate background information, respectful narration, visual ideas and a clear conclusion. Distinguish verified facts from personal stories."
+  },
+  {
+    title: "Mini Movie Script",
+    category: "Drama",
+    icon: "🎬",
+    description: "Build a short story with a twist.",
+    prompt: "Write an original 60-second animated mini movie with two main characters, a strong opening hook, a clear conflict, three short scenes and a surprising but satisfying ending."
+  }
+];
+
+let activeCategory = "All";
+
+const promptGrid = document.getElementById("promptGrid");
+const searchInput = document.getElementById("searchInput");
+const emptyMessage = document.getElementById("emptyMessage");
+
+function renderPrompts() {
+  const search = searchInput.value.trim().toLowerCase();
+
+  const filtered = prompts.filter(item => {
+    const matchesCategory =
+      activeCategory === "All" || item.category === activeCategory;
+
+    const matchesSearch =
+      (item.title + " " + item.description + " " +
+      item.category + " " + item.prompt).toLowerCase().includes(search);
+
+    return matchesCategory && matchesSearch;
+  });
+
+  promptGrid.innerHTML = filtered.map(item => `
+    <article class="card">
+      <div class="card-icon">${item.icon}</div>
+      <span class="small-label">${item.category}</span>
+      <h3>${item.title}</h3>
+      <p>${item.description}</p>
+      <button class="btn" data-prompt="${item.title}">
+        Copy Prompt 📋
+      </button>
+    </article>
+  `).join("");
+
+  emptyMessage.hidden = filtered.length !== 0;
+}
+
+promptGrid.addEventListener("click", event => {
+  const button = event.target.closest("button[data-prompt]");
+  if (!button) return;
+
+  const item = prompts.find(p => p.title === button.dataset.prompt);
+  if (item) copyText(item.prompt);
+});
+
+document.querySelectorAll(".category").forEach(button => {
+  button.addEventListener("click", () => {
+    activeCategory = button.dataset.category;
+
+    document.querySelectorAll(".category").forEach(b => {
+      b.classList.toggle("active", b === button);
+    });
+
+    renderPrompts();
+  });
+});
+
+searchInput.addEventListener("input", renderPrompts);
+
+let toastTimer;
+
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.style.display = "block";
+
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    toast.style.display = "none";
+  }, 2200);
+}
+
+async function copyText(text) {
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+    } else {
+      const area = document.createElement("textarea");
+      area.value = text;
+      area.style.position = "fixed";
+      area.style.opacity = "0";
+      document.body.appendChild(area);
+      area.select();
+
+      const success = document.execCommand("copy");
+      area.remove();
+
+      if (!success) throw new Error("Copy failed");
+    }
+
+    showToast("Prompt copied successfully! ✓");
+  } catch (error) {
+    showToast("Copy unavailable. Please try a secure browser preview.");
+  }
+}
+
+document.getElementById("year").textContent = new Date().getFullYear();
+
+renderPrompts();
+</script>
+
+</body>
+</html>
